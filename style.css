@@ -1,231 +1,256 @@
 @import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@700&family=Roboto&family=Ubuntu+Condensed&display=swap');
 
 
-*{
-    box-sizing: border-box;
-    font-family: 'Exo 2', sans-serif;
-    color: white;
-    margin: 0;
+* {
+  box-sizing: border-box;
+  font-family: 'Exo 2', sans-serif;
+  color: white;
+  margin: 0;
 }
 
-body{
-    background-color: #0B0B13;
+body {
+  background-color: #0B0B13;
 }
 
-.primary-container{
-    background-color: #141625;
-    min-width: 500px;
-    padding: 40px;
-    border-radius: 25px;
+.primary-container {
+  background-color: #141625;
+  min-width: 500px;
+  padding: 40px;
+  border-radius: 25px;
 }
 
-.body-container{
-    display: flex;
-    justify-content: center;
-    gap: 100px;
+.body-container {
+  display: flex;
+  justify-content: center;
+  gap: 100px;
 }
 
-.primary-header-container{
-    margin-bottom: 40px;
+.primary-header-container {
+  margin-bottom: 40px;
 }
 
-.primary-header{
-    font-size: 25px;
+.primary-header {
+  font-size: 25px;
 }
 
-.secondary-header-container{
-    margin-top: 30px;
-    margin-bottom: 20px;
+.secondary-header-container {
+  margin-top: 30px;
+  margin-bottom: 20px;
 }
 
-.secondary-header{
-    font-size: 15px;
-    color: #7765D0;
-    text-transform: capitalize;
+.secondary-header {
+  font-size: 15px;
+  color: #7765D0;
+  text-transform: capitalize;
 }
 
-.input-item{
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin-bottom: 20px;
-    /* margin-top: 30px; */
+.input-item {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+  /* margin-top: 30px; */
 }
 
-.input-label{
-    font-size: 13px;
-    color: rgb(200,200,200);
-    text-transform: capitalize;
+.input-label {
+  font-size: 13px;
+  color: rgb(200, 200, 200);
+  text-transform: capitalize;
 }
 
-.text-input{
-    border-radius: 3px;
-    padding: 1em;
-    height: 3em;
-    background-color: #1F213A;
-    border: 1px solid #24263C;
+.text-input {
+  border-radius: 3px;
+  padding: 1em;
+  height: 3em;
+  background-color: #1F213A;
+  border: 1px solid #24263C;
 }
 
-.button-container{
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-end;
-    gap: 5px;
+.button-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  gap: 5px;
 }
 
-.button{
-    padding: 1em 1.5em;
-    border-radius: 2em;
-    border: 0;
-    cursor: pointer;
+.button {
+  padding: 1em 1.5em;
+  border-radius: 2em;
+  border: 0;
+  cursor: pointer;
 }
 
-.primary-button{
-    background-color: #7C5DF9;
+.primary-button {
+  background-color: #7C5DF9;
 }
 
-.secondary-button{
-    background-color: #252946;
+.secondary-button {
+  background-color: #252946;
 }
 
-.primary-button:hover{
-    background-color:  #3F2E7E;  
+.primary-button:hover {
+  background-color: #3F2E7E;
 }
 
-.secondary-button:hover{
-    background-color: #121421;   
+.secondary-button:hover {
+  background-color: #121421;
 }
 
-.danger-button{
-    background-color: #e05454;
+.danger-button {
+  background-color: #e05454;
 }
 
-.danger-button:hover{
-    background-color: #752A2A;
+.danger-button:hover {
+  background-color: #752A2A;
 }
 
 .slider {
-    -webkit-appearance: none;
-    width: 100%;
-    height: 25px;
-    background: #d3d3d3;
-    outline: none;
-    opacity: 0.7;
-    -webkit-transition: .2s;
-    transition: opacity .2s;
-    border-radius: 4px;
-  }
-  
-  .slider:hover {
-    opacity: 1;
-  }
-  
-  .slider::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 25px;
-    height: 25px;
-    background: #7C5DF9;
-    cursor: pointer;
-  }
-  
-  .slider::-moz-range-thumb {
-    width: 25px;
-    height: 25px;
-    background: #7C5DF9;
-    cursor: pointer;
-  }
+  -webkit-appearance: none;
+  width: 100%;
+  height: 25px;
+  background: #d3d3d3;
+  outline: none;
+  opacity: 0.7;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+  border-radius: 4px;
+}
 
-  /* .radio-input-container{
+.slider:hover {
+  opacity: 1;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 25px;
+  height: 25px;
+  background: #7C5DF9;
+  cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+  width: 25px;
+  height: 25px;
+  background: #7C5DF9;
+  cursor: pointer;
+}
+
+/* .radio-input-container{
 
   } */
 
-  .radio-label, .checkbox-label{
-    margin-left: 10px;
-  }
+.radio-label,
+.checkbox-label {
+  margin-left: 10px;
+}
 
-  .filters-container{
-    background-color: #1F213A;
-    border-radius: 15px;
-    padding: 25px;
-    margin-bottom: 15px;
-  }
+.filters-container {
+  background-color: #1F213A;
+  border-radius: 15px;
+  padding: 25px;
+  margin-bottom: 15px;
+}
 
-  .student-item-list{
-    display:flex;
-    flex-direction: column;
-    gap: 25px;
-  }
+.student-item-list {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
 
-  .student-item{
-    background-color: #1F213A;
-    border-radius: 15px;
-    padding: 25px;
-    display: flex;
-    justify-content: space-between;
-  }
+.student-item {
+  background-color: #1F213A;
+  border-radius: 15px;
+  padding: 25px;
+  display: flex;
+  justify-content: space-between;
+}
 
-  .student-item .student-item-left{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-  }
+.student-item .student-item-left {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
 
-  .student-item .student-name,
-  .student-item .student-surname,
-  .student-item .student-age {
-    text-transform: uppercase;
-    font-size: 20px;
-  }
+.student-item .student-name,
+.student-item .student-surname,
+.student-item .student-age {
+  text-transform: uppercase;
+  font-size: 20px;
+}
 
-  .student-item .student-item-header{
-    margin-bottom: 10px;
-    display: flex;
-    /* flex-direction: column; */
-    justify-content: space-between;
-    gap: 5px;
-    flex-wrap: wrap;
-  }
+.student-item .student-item-header {
+  margin-bottom: 10px;
+  display: flex;
+  /* flex-direction: column; */
+  justify-content: space-between;
+  gap: 5px;
+  flex-wrap: wrap;
+}
 
-  .student-item .student-item-secondary{
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 10px;
-  }
+.student-item .student-item-secondary {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 10px;
+  gap: 10px;
+}
 
-  .student-item .student-tel,
-  .student-item .student-email{
-    color: rgb(200,200,200);
-  }
+.student-item .student-tel,
+.student-item .student-email {
+  color: rgb(200, 200, 200);
+}
 
-  .student-item .student-item-buttons{
-    margin-top: 10px;
-    display: flex;
-    gap: 5px;
-  }
+/* .student-item .student-email:hover{
+ 
+} */
 
-  .student-item .student-item-details{
-    display: flex;
-    flex-direction: column;
-    text-align: left;
-    color: rgb(200,200,200);
-    gap: 5px;
-    margin-bottom: 10px;
-  }
+.student-item .student-item-buttons {
+  margin-top: 10px;
+  display: flex;
+  gap: 5px;
+}
 
-  .student-item .student-item-languages{
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    justify-content: center;
-    min-height: 100%;
-  }
+.student-item .student-item-details {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  color: rgb(200, 200, 200);
+  gap: 5px;
+  margin-bottom: 10px;
+}
 
-  .student-item .student-language{
-    background-color: #2A2C43;
-    padding: 0.4em;
-    color: #D4D6ED;
-    border-radius: 5px;
-    width: 100px;
-    text-align: center;
-  }
+.student-item .student-item-languages {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  justify-content: center;
+  min-height: 100%;
+}
+
+.student-item .student-language {
+  background-color: #2A2C43;
+  padding: 0.4em;
+  color: #D4D6ED;
+  border-radius: 5px;
+  width: 100px;
+  text-align: center;
+}
+
+.red-border {
+  border: 1px solid #d3544b;
+  transition: border 1s;
+}
+
+.success-button,
+.success-button:hover {
+  background-color: #1D2C3F;
+  color: #1FDD9F;
+  text-transform: uppercase;
+}
+
+.failure-button,
+.failure-button:hover{
+  background-color:#2D2735;
+  color: #d3544b;
+  text-transform: uppercase;
+}

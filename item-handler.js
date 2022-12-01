@@ -1,7 +1,10 @@
 class itemHandler {
-    constructor(data = []) {
+    constructor(data = {}) {
         this.rawData = data;
-        let template = ["name", "surname", "age", "tel", "email", "rating", "group"];
+        // console.log(data);
+        let template = Object.keys(this.rawData);
+        // console.log(template);
+
         let itemDiv = document.createElement("div");
         itemDiv.classList.add("student-item");
 
@@ -13,47 +16,48 @@ class itemHandler {
         let itemHeader = document.createElement("div");
         itemHeader.classList.add("student-item-header");
 
-        this.spans = [];
+        this.spans = {};
 
 
 
-        for (let i = 0; i < this.rawData.length - 1; i++) {
-            const element = this.rawData[i];
+        for (let i = 0; i < template.length - 1; i++) {
             let newSpan = document.createElement("span");
             newSpan.classList.add("student-" + template[i]);
-            newSpan.innerText = element;
-            this.spans.push(newSpan);
+            newSpan.innerText = this.rawData[template[i]];
+            this.spans[template[i]] = newSpan;
         }
-        this.spans.push([]);
-        this.rawData[7].forEach(element => {
+        // console.log(this.spans);
+        this.spans.languages = [];
+        this.rawData.languages.forEach(element => {
             let newSpan = document.createElement("span");
             newSpan.classList.add('student-language');
             newSpan.innerText = element;
-            this.spans[7].push(newSpan);
+            this.spans.languages.push(newSpan);
         });
 
+        //will not work with any amount of inputs
         //headers
-        itemHeader.append(this.spans[0], this.spans[1], this.spans[2]);
+        itemHeader.append(this.spans.name, this.spans.surname, this.spans.age);
         itemLeft.append(itemHeader);
 
         //secondaries
         let itemSecondary = document.createElement("div");
 
-        this.spans[6].classList.add("secondary-header");
-        this.spans[6].innerText = "CAFS " + this.spans[6].innerText + "gr.";
+        this.spans.group.classList.add("secondary-header");
+        // this.spans.group.innerText = this.spans[6].innerText;
 
-        this.spans[5].classList.add("secondary-header");
-        this.spans[5].innerText += "/10";
+        this.spans.skills.classList.add("secondary-header");
+        this.spans.skills.innerText += "/10";
 
         itemSecondary.classList.add("student-item-secondary");
-        itemSecondary.append(this.spans[6], this.spans[5]);
+        itemSecondary.append(this.spans.group, this.spans.skills);
         itemLeft.append(itemSecondary);
 
         //details
         let itemDetails = document.createElement("div");
 
         itemDetails.classList.add("student-item-details");
-        itemDetails.append(this.spans[3], this.spans[4]);
+        itemDetails.append(this.spans.phone, this.spans.email);
         itemLeft.append(itemDetails);
 
         //buttons
@@ -63,21 +67,23 @@ class itemHandler {
         let editButton = document.createElement("button");
         editButton.classList.add("primary-button", "button");
         editButton.innerText = "Edit";
+        // editButton.addEventListener("click",() => {this.editMe()});
 
-        let deleteButton = document.createElement("button");
-        deleteButton.classList.add("danger-button", "button");
-        deleteButton.innerText = "Delete";
+        this.deleteButton = document.createElement("button");
+        this.deleteButton.classList.add("danger-button", "button");
+        this.deleteButton.innerText = "Delete";
+        // this.deleteButton.addEventListener("click",() => {deleteItem(this.currentIndex)});
 
 
         itemButtons.append(editButton);
-        itemButtons.append(deleteButton);
+        itemButtons.append(this.deleteButton);
 
         itemLeft.append(itemButtons);
 
         //languages
         let itemLanguages = document.createElement("div");
         itemLanguages.classList.add("student-item-languages");
-        this.spans[7].forEach(element => {
+        this.spans.languages.forEach(element => {
             itemLanguages.append(element);
         });
         
@@ -94,6 +100,7 @@ class itemHandler {
     }
     setIndex(index) {
         this.domElement.dataset.currentIndex = index;
+        this.currentIndex = index;
     }
 }
 

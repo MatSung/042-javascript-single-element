@@ -1,29 +1,39 @@
 class InputGenerator {
-    constructor(title = "myInput", type = "text", parameters = "placeholder") {
-        this.title = title;
-        this.type = type;
-        this.parameters = parameters;
+    constructor(inputTemplateObject) {
+        this.displayName = inputTemplateObject.displayName;
+        this.type = inputTemplateObject.type;
+        if(["text", "tel", "email", "number"].includes(inputTemplateObject.type)){
+            this.quantity = "single";
+        } else if (["radio","checkbox"].includes(inputTemplateObject.type)){
+            this.quantity = "multiple";
+        } else{
+            this.quantity = "special";
+        }
+        this.parameters = inputTemplateObject.parameters;
+        this.placeholder = inputTemplateObject.placeholder;
+        this.name = inputTemplateObject.name;
     }
 
     generateInput(location) {
         let divContainer = document.createElement("div");
         divContainer.classList.add("input-item");
         let label = document.createElement("label");
-        label.setAttribute("for", this.title + "-input");
+        label.setAttribute("for", this.name + "-input");
         label.classList.add("input-label");
-        label.innerText = this.title;
+        label.innerText = this.displayName;
         divContainer.append(label);
         var inputElement = document.createElement("input");
         inputElement.setAttribute("type", this.type);
         inputElement.id = this.type + "-input";
+        inputElement.dataset.name = this.name;
 
-        if (["text", "tel", "email", "number"].includes(this.type)) {
+        if (this.quantity == "single") {
             divContainer.classList.add("text-input-container");
             inputElement.classList.add("text-input");
-            inputElement.setAttribute("placeholder", this.parameters);
+            inputElement.setAttribute("placeholder", this.placeholder);
             divContainer.append(inputElement);
             
-        } else if (this.type == "range") {
+        } else if (this.quantity == "special") {
             divContainer.classList.add("range-input-container");
             inputElement.classList.add("range-input");
             inputElement.classList.add("slider");
@@ -36,59 +46,36 @@ class InputGenerator {
             divContainer.append(output);
             inputElement.setAttribute("oninput", "this.previousElementSibling.value = this.value + '/10'")
             divContainer.append(inputElement);
-        } else if(this.type == "radio"){
+
+        } else if(this.quantity == "multiple"){
             //can only take a single radio input in the list
             //will fix
-            divContainer.classList.add("radio-input-container");
+            divContainer.classList.add(this.type + "-input-container");
             //multiple inputs
             var inputElement = [];
             this.parameters.forEach((element,index) => {
                 let secondaryDiv = document.createElement("div");
                 
 
-                var radioElement = document.createElement("input");
-                radioElement.setAttribute("type", this.type);
-                radioElement.name = this.title;
-                radioElement.value = element[1];
-                radioElement.id = "radio-" + (index+1);
-                secondaryDiv.append(radioElement);
+                var multipleElement = document.createElement("input");
+                multipleElement.setAttribute("type", this.type);
+                multipleElement.name = this.name;
+                multipleElement.value = element;
+                multipleElement.id = this.name + "-" + this.type + "-" + (index+1);
+                multipleElement.dataset.name = this.name;
+                secondaryDiv.append(multipleElement);
 
                 let secondaryLabel = document.createElement("label");
-                secondaryLabel.classList.add("radio-label");
-                secondaryLabel.innerText = element[0];
-                secondaryLabel.setAttribute("for",radioElement.id);
+                secondaryLabel.classList.add(this.type + "-label");
+                secondaryLabel.innerText = element;
+                secondaryLabel.setAttribute("for",multipleElement.id);
                 
                 secondaryDiv.append(secondaryLabel);
 
                 divContainer.append(secondaryDiv);
-                inputElement.push(radioElement);
+                inputElement.push(multipleElement);
             });
             
-        } else if (this.type == "checkbox"){
-            divContainer.classList.add("checkbox-input-container");
-            //multiple inputs
-            var inputElement = [];
-            this.parameters.forEach((element,index) => {
-                let secondaryDiv = document.createElement("div");
-                
-
-                var radioElement = document.createElement("input");
-                radioElement.setAttribute("type", this.type);
-                radioElement.name = this.title;
-                radioElement.value = element;
-                radioElement.id = "checkbox-" + (index+1);
-                secondaryDiv.append(radioElement);
-
-                let secondaryLabel = document.createElement("label");
-                secondaryLabel.classList.add("checkbox-label");
-                secondaryLabel.innerText = element;
-                secondaryLabel.setAttribute("for",radioElement.id);
-                
-                secondaryDiv.append(secondaryLabel);
-
-                divContainer.append(secondaryDiv);
-                inputElement.push(radioElement);
-            });
         }
 
         location.append(divContainer);
