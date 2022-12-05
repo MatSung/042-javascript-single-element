@@ -19,6 +19,13 @@ body {
   border-radius: 25px;
 }
 
+.yellow-border{
+  border: 1px solid yellow;
+  box-shadow: 0 0 10px yellow;
+  animation: box-shadow 3s, border 3s;
+
+}
+
 .body-container {
   display: flex;
   justify-content: center;

@@ -232,7 +232,11 @@ function handleButton(value,button) {
         }else{
             //do unsuccess
         }
-    } 
+    } else if (value == "save"){
+        //save changes
+    } else if (value == "cancel"){
+
+    }
 }
 
 const showStatus = async (button,message) => {
@@ -257,6 +261,9 @@ function checkMistakes(){
             showMistake(element, "Field must not be empty");
             isValid = false;
         }
+    }
+    if(!document.querySelector(".radio-label").length){
+        isValid = false;
     }
     //check all requirements for the field
     // if(nameInput.value.length < 3){
