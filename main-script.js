@@ -188,6 +188,7 @@ function deleteItem(index){
 }
 
 function addSingleElement(data){
+    console.log(data);
     let element = new itemHandler(data);
     storage.addToStorage(data);
     element.deleteButton.addEventListener("click",()=>{deleteItem(element.currentIndex)});
@@ -213,16 +214,17 @@ function collectDataFromInputs(){
         const element = inputList[i].inputElement;
         data[element.dataset.name] = element.value;
     }
-    for (let i = 0; i < inputList[6].length; i++) {
-        const element = inputList[6][i].inputElement;
+    for (let i = 0; i < inputList[6].inputElement.length; i++) {
+        console.log("ere");
+        const element = inputList[6].inputElement[i];
         if (element.checked) {
             data.group = element.value;
             break
         }
     }
     data.languages = [];
-    for (let i = 0; i < inputList[7].length; i++) {
-        const element = inputList[7][i].inputElement;
+    for (let i = 0; i < inputList[7].inputElement.length; i++) {
+        const element = inputList[7].inputElement[i];
         if(element.checked){
             data.languages.push(element.value);
         }
