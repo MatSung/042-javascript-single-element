@@ -4,10 +4,11 @@ class storageHandler {
         this.jsonStorage = window.localStorage.getItem("studentList");
         if(this.jsonStorage == null){
             this.fetchedStorage = [];
+            console.log("storage empty");
         } else{
             this.fetchedStorage = JSON.parse(this.jsonStorage);
         }
-        
+        console.log("storage fetched");
     }
 
     addToStorage(data){

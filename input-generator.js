@@ -12,6 +12,7 @@ class InputGenerator {
         this.parameters = inputTemplateObject.parameters;
         this.placeholder = inputTemplateObject.placeholder;
         this.name = inputTemplateObject.name;
+        this.inputElement;
     }
 
     generateInput(location) {
@@ -22,37 +23,37 @@ class InputGenerator {
         label.classList.add("input-label");
         label.innerText = this.displayName;
         divContainer.append(label);
-        var inputElement = document.createElement("input");
-        inputElement.setAttribute("type", this.type);
-        inputElement.id = this.type + "-input";
-        inputElement.dataset.name = this.name;
+        this.inputElement = document.createElement("input");
+        this.inputElement.setAttribute("type", this.type);
+        this.inputElement.id = this.type + "-input";
+        this.inputElement.dataset.name = this.name;
 
         if (this.quantity == "single") {
             divContainer.classList.add("text-input-container");
-            inputElement.classList.add("text-input");
-            inputElement.setAttribute("placeholder", this.placeholder);
-            divContainer.append(inputElement);
+            this.inputElement.classList.add("text-input");
+            this.inputElement.setAttribute("placeholder", this.placeholder);
+            divContainer.append(this.inputElement);
             
         } else if (this.quantity == "special") {
             divContainer.classList.add("range-input-container");
-            inputElement.classList.add("range-input");
-            inputElement.classList.add("slider");
-            inputElement.value = 1;
-            inputElement.setAttribute("max", 10);
-            inputElement.setAttribute("min", 1);
+            this.inputElement.classList.add("range-input");
+            this.inputElement.classList.add("slider");
+            this.inputElement.value = 1;
+            this.inputElement.setAttribute("max", 10);
+            this.inputElement.setAttribute("min", 1);
 
-            let output = document.createElement("output");
-            output.innerText = "1/10";
-            divContainer.append(output);
-            inputElement.setAttribute("oninput", "this.previousElementSibling.value = this.value + '/10'")
-            divContainer.append(inputElement);
+            this.output = document.createElement("output");
+            this.output.innerText = "1/10";
+            divContainer.append(this.output);
+            this.inputElement.setAttribute("oninput", "this.previousElementSibling.value = this.value + '/10'")
+            divContainer.append(this.inputElement);
 
         } else if(this.quantity == "multiple"){
             //can only take a single radio input in the list
             //will fix
             divContainer.classList.add(this.type + "-input-container");
             //multiple inputs
-            var inputElement = [];
+            this.inputElement = [];
             this.parameters.forEach((element,index) => {
                 let secondaryDiv = document.createElement("div");
                 
@@ -62,6 +63,7 @@ class InputGenerator {
                 multipleElement.name = this.name;
                 multipleElement.value = element;
                 multipleElement.id = this.name + "-" + this.type + "-" + (index+1);
+                multipleElement.classList.add(this.name+"-radio-input");
                 multipleElement.dataset.name = this.name;
                 secondaryDiv.append(multipleElement);
 
@@ -73,14 +75,33 @@ class InputGenerator {
                 secondaryDiv.append(secondaryLabel);
 
                 divContainer.append(secondaryDiv);
-                inputElement.push(multipleElement);
+                this.inputElement.push(multipleElement);
             });
             
         }
 
         location.append(divContainer);
-            return inputElement;
         
+            return this.inputElement;
+        
+    }
+    applyValue(value){
+        if(this.quantity == "single"){
+            this.inputElement.value = value;
+            
+        } else if (this.quantity == "multiple"){
+            if(this.type == "checkbox"){
+                value.forEach(element => {
+                    // console.log(element);
+                    this.inputElement[this.parameters.indexOf(element)].checked = true;
+                });
+            } else if (this.type =="radio"){
+                this.inputElement[this.parameters.indexOf(value)].checked = true;
+            }
+        } else if (this.type=="range"){
+            this.inputElement.value = value;
+            this.output.innerText = value + "/10";
+        }
     }
 }
 

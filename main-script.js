@@ -12,7 +12,7 @@ let inputList;
 let itemsList;
 let storage = new storageHandler();
 
-
+document.getElementById("debug-button").addEventListener("click", ()=>{debugButtonFunction()});
 
 initPage();
 
@@ -131,13 +131,13 @@ function initPage() {
     // ];
 
     
-    console.log(storage.fetchedStorage);
+    // console.log(storage.fetchedStorage);
 
     let buttonTemplate = [
         //["display text", "id" + "-button", primary/secondary, visible/invisible]
         ["Submit", "submit", "primary", true],
-        ["Save Changes", "save-changes", "primary", false],
-        ["Cancel", "cancel", "secondary", false]
+        ["Cancel", "cancel", "secondary", false],
+        ["Save Changes", "save-changes", "primary", false]
     ];
     //title of the inputs side
     addHeader(contentDiv, "Form", "primary");
@@ -165,11 +165,10 @@ function initPage() {
 
     itemsList = retrieveStudents(storage.fetchedStorage);
 
-    
+
 
     drawStudents(studentList);
     console.log("students drawn from memory");
-
 
 }
 
@@ -197,6 +196,51 @@ function addSingleElement(data){
     return 1;
 }
 
+function debugButtonFunction(){
+    for (let i = 0; i < inputList.length - 3; i++) {
+        inputList[i].inputElement.value = "";
+    }
+    let allChecked = document.querySelectorAll("*:checked");
+    for (let i = 0; i < allChecked.length; i++) {
+        const element = allChecked[i];
+        element.checked = false;
+    }
+}
+
+function collectDataFromInputs(){
+    let data = {};
+    for (let i = 0; i < inputList.length - 2; i++) {
+        const element = inputList[i].inputElement;
+        data[element.dataset.name] = element.value;
+    }
+    for (let i = 0; i < inputList[6].length; i++) {
+        const element = inputList[6][i].inputElement;
+        if (element.checked) {
+            data.group = element.value;
+            break
+        }
+    }
+    data.languages = [];
+    for (let i = 0; i < inputList[7].length; i++) {
+        const element = inputList[7][i].inputElement;
+        if(element.checked){
+            data.languages.push(element.value);
+        }
+    }
+    return data;
+}
+
+function clearInputs(){
+    for (let i = 0; i < inputList.length - 3; i++) {
+        inputList[i].inputElement.value = "";
+    }
+    let allChecked = document.querySelectorAll("*:checked");
+    for (let i = 0; i < allChecked.length; i++) {
+        const element = allChecked[i];
+        element.checked = false;
+    }
+}
+
 function handleButton(value,button) {
     if (value == "submit") {
         removeMistakes();
@@ -205,35 +249,38 @@ function handleButton(value,button) {
             return;
         }
 
-        let data = {};
-        for (let i = 0; i < inputList.length - 2; i++) {
-            const element = inputList[i];
-            data[element.dataset.name] = element.value;
-        }
-        for (let i = 0; i < inputList[6].length; i++) {
-            const element = inputList[6][i];
-            if (element.checked) {
-                data.group = element.value;
-                break
-            }
-        }
-        data.languages = [];
-        for (let i = 0; i < inputList[7].length; i++) {
-            const element = inputList[7][i];
-            if(element.checked){
-                data.languages.push(element.value);
-            }
-        }
-
+        let data = collectDataFromInputs();
 
         if(addSingleElement(data)){
             showStatus(button,"success");
-            //clear inputs
+            clearInputs();
+
         }else{
             //do unsuccess
         }
     } else if (value == "save"){
+        removeMistakes();
+        if(!checkMistakes()){
+            showStatus(button,"failure");
+            for (let i = 0; i < inputList.length - 3; i++) {
+                inputList[i].inputElement.value = "";
+            }
+            let allChecked = document.querySelectorAll("*:checked");
+            for (let i = 0; i < allChecked.length; i++) {
+                const element = allChecked[i];
+                element.checked = false;
+            }
+            return;
+        }
         //save changes
+        //check mistakes
+        //if mistakes change button for a second and remove mistakes
+
+        //if no mistakes, push new data into array
+
+        //change border back if successful
+        document.getElementsByClassName("left-container").classList.remove("yellow-border");
+        
     } else if (value == "cancel"){
 
     }
@@ -256,13 +303,13 @@ function checkMistakes(){
     //if mistaken add red border and optionally failed text
     let isValid = true;
     for (let i = 0; i < 5; i++) {
-        const element = inputList[i];
+        const element = inputList[i].inputElement;
         if(!element.value){
             showMistake(element, "Field must not be empty");
             isValid = false;
         }
     }
-    if(!document.querySelector(".radio-label").length){
+    if(!document.querySelector(".group-radio-input:checked")){
         isValid = false;
     }
     //check all requirements for the field
@@ -332,8 +379,8 @@ function fillInputs(inputTemplate, location) {
     let allMyInputs = [];
     inputTemplate.forEach((element, index) => {
         let inputObject = new InputGenerator(element);
-        allMyInputs.push(inputObject.generateInput(location));
-        //push input object?
+        inputObject.generateInput(location);
+        allMyInputs.push(inputObject);
     });
     return allMyInputs;
 }
@@ -357,11 +404,38 @@ function generateButtons(location, buttonTemplate) {
     location.append(divContainer);
 }
 
+function initiateEdit(objectIndex){
+    //turn panel yellow
+    document.getElementById("left-container").classList.add("yellow-border");
+
+    //hide submit button, show save and cancel buttons
+    let saveEditButton = document.getElementById("save-changes-button");
+    let cancelEditButton = document.getElementById("cancel-button");
+    let submitButton = document.getElementById("submit-button");
+
+    saveEditButton.hidden = false;
+    cancelEditButton.hidden = false;
+    submitButton.hidden = true;
+    
+    clearInputs();
+
+
+    //fill my inputs with data that i already have
+    let dataList = itemsList[objectIndex].rawData;
+    let inputKeys = Object.keys(dataList);
+    for (let i = 0; i < inputList.length; i++) {
+        const element = inputList[i];
+        element.applyValue(dataList[inputKeys[i]]);
+    }
+
+}
+
 function retrieveStudents(data) {
     let items = [];
     data.forEach(element => {
         let object = new itemHandler(element);
         object.deleteButton.addEventListener("click",()=>{deleteItem(object.currentIndex)});
+        object.editButton.addEventListener("click", () => {initiateEdit(object.currentIndex)});
         items.push(object);
     });
     return items;

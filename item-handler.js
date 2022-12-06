@@ -64,9 +64,9 @@ class itemHandler {
         let itemButtons = document.createElement("div");
 
         itemButtons.classList.add("student-item-buttons");
-        let editButton = document.createElement("button");
-        editButton.classList.add("primary-button", "button");
-        editButton.innerText = "Edit";
+        this.editButton = document.createElement("button");
+        this.editButton.classList.add("primary-button", "button");
+        this.editButton.innerText = "Edit";
         // editButton.addEventListener("click",() => {this.editMe()});
 
         this.deleteButton = document.createElement("button");
@@ -75,7 +75,7 @@ class itemHandler {
         // this.deleteButton.addEventListener("click",() => {deleteItem(this.currentIndex)});
 
 
-        itemButtons.append(editButton);
+        itemButtons.append(this.editButton);
         itemButtons.append(this.deleteButton);
 
         itemLeft.append(itemButtons);
